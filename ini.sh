@@ -7,13 +7,23 @@ hostnamectl --static set-hostname $hostname
 # yum update
 yum -y update
 yum install epel-release -y
+yum groupinstall "Development Tools" -y
 # system tools
-yum install -y wget git vim unzip zip
+yum install -y wget git vim unzip zip bzip2
 # git config
 git config --global user.name $hostname
 git config --global user.email git@$hostname.yimian.xyz
 # gcc
-yum install -y gcc gcc-c++ gdb openssl make
+yum install -y openssl make
+cd /usr/local/src/
+wget https://ftp.gnu.org/gnu/gcc/gcc-9.2.0/gcc-9.2.0.tar.gz
+tar -zxvf gcc-9.2.0.tar.gz
+mv gcc-9.2.0.tar.gz gcc
+cd gcc
+./contrib/download_prerequisites
+../configure -enable-checking=release -enable-languages=c,c++ -disable-multilib
+make
+make install
 #firewall
 systemctl stop firewalld
 systemctl disable firewalld
