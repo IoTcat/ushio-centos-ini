@@ -14,6 +14,13 @@ git config --global user.name $hostname
 git config --global user.email git@$hostname.yimian.xyz
 # gcc
 yum install -y gcc gcc-c++ gdb openssl make
+#firewall
+systemctl stop firewalld
+systemctl disable firewalld
+sed -i s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config
+yum install iptables-services iptables-devel -y
+systemctl start iptables
+systemctl enable ipdables
 # php
 rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
 rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
