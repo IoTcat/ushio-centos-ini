@@ -5,7 +5,7 @@ echo -n  "please enter hostname ->"
 read  hostname
 hostnamectl --static set-hostname $hostname
 # yum update
-yun -y update
+yum -y update
 yum install epel-release -y
 # system tools
 yum install -y wget git vim unzip
