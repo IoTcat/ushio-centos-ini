@@ -6,7 +6,7 @@ tar -zxvf gcc-9.2.0.tar.gz
 mv gcc-9.2.0 gcc
 cd gcc
 ./contrib/download_prerequisites
-../configure -enable-checking=release -enable-languages=c,c++ -disable-multilib
+./configure -enable-checking=release -enable-languages=c,c++ -disable-multilib
 make
 make install
 cd ..
