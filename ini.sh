@@ -8,7 +8,7 @@ hostnamectl --static set-hostname $hostname
 yun -y update
 yum install epel-release -y
 # system tools
-yum install -y wget git
+yum install -y wget git vim unzip
 # git config
 git config --global user.name $hostname
 git config --global user.email git@$hostname.yimian.xyz
