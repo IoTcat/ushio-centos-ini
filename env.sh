@@ -8,7 +8,7 @@ hostnamectl set-hostname $1
 #
 # active rc.local
 #
-chmod +x /etc/rc.d/rc.local
+#chmod +x /etc/rc.d/rc.local
 # 
 # yum update
 # 
@@ -30,7 +30,10 @@ systemctl start docker
 curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-echo /usr/local/bin/docker-compose -f /mnt/docker/docker-compose.yml up -d>>/etc/rc.d/rc.local
+wget -P /etc/systemd/system https://onedrive.yimian.xyz/config/systemd/ushio.service
+chmod +x /etc/systemd/system/ushio.service
+systemctl daemon-reload
+systemctl enable ushio
 # 
 # firewall
 # 
@@ -59,13 +62,17 @@ curl https://rclone.org/install.sh | sudo bash
 wget -P /root/.config/rclone/ https://onedrive.yimian.xyz/config/rclone/rclone.conf.aes
 openssl enc -aes-128-cbc -in /root/.config/rclone/rclone.conf.aes -out /root/.config/rclone/rclone.conf -pass pass:$2 -d
 nohup rclone mount onedrive:ushio /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &
-echo nohup rclone mount onedrive:ushio /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &>>/etc/rc.d/rc.local
+wget -P /etc/systemd/system https://onedrive.yimian.xyz/config/systemd/rclone.service
+chmod +x /etc/systemd/system/rclone.service
+systemctl daemon-reload
+systemctl enable rclone
+systemctl start rclone
 #############################
 #  Ushio Env Ini Finished           
 #############################
 # 
 # Email Notice
-# curl "https://api.yimian.xyz/mail/?to=i@iotcat.me&subject=$1 Ushio Env ini finished&body=ini finished!!"
+ curl "https://api.yimian.xyz/mail/?to=i@iotcat.me&subject=$1 Ushio Env ini finished&body=ini finished!!"
 #
 # system reboot 
-#reboot
+reboot
