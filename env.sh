@@ -15,17 +15,9 @@ chmod +x /etc/rc.d/rc.local
 yum -y update
 yum install epel-release -y
 #
-# onedrive
-#
-yum install -y screen fuse fuse-devel
-curl https://rclone.org/install.sh | sudo bash
-rclone config
-nohup rclone mount o:ushio /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &
-echo nohup rclone mount o:ushio /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &>>/etc/rc.d/rc.local
-#
 # Development Tools
 #
-yum install -y wget git vim unzip zip openssl make gcc gcc-c++
+yum install -y wget git vim unzip zip openssl make gcc gcc-c++ screen fuse fuse-devel
 # git config
 git config --global user.name $1
 git config --global user.email git@$1
@@ -59,6 +51,14 @@ iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 service iptables save
 service iptables restart
+#
+# onedrive
+#
+curl https://rclone.org/install.sh | sudo bash
+wget -P /root/.config/rclone/ https://onedrive.yimian.xyz/config/rclone/rclone.conf.aes
+openssl enc -aes-128-cbc -in /root/.config/rclone/rclone.conf.aes -out /root/.config/rclone/rclone.conf -pass pass:$2 -d
+nohup rclone mount o:ushio /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &
+echo nohup rclone mount o:ushio /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &>>/etc/rc.d/rc.local
 #############################
 #  Ushio Env Ini Finished           
 #############################
