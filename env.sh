@@ -21,6 +21,8 @@ yum install -y wget git vim unzip zip openssl make gcc gcc-c++ screen fuse fuse-
 # git config
 git config --global user.name $1
 git config --global user.email git@$1
+git config credential.helper store
+git config --global core.autocrlf input
 #
 # docker
 #
@@ -67,12 +69,17 @@ chmod +x /etc/systemd/system/rclone.service
 systemctl daemon-reload
 systemctl enable rclone
 systemctl start rclone
+#
+# config
+#
+ln -s /mnt/config/vim/.vimrc ~/.vimrc
+ln -s /mnt/config/git/.git-credentials ~/.git-credentials
 #############################
 #  Ushio Env Ini Finished           
 #############################
 # 
 # Email Notice
- curl "https://api.yimian.xyz/mail/?to=i@iotcat.me&subject=$1 Ushio Env ini finished&body=ini finished!!"
+curl "https://api.yimian.xyz/mail/?to=i@iotcat.me&subject=$1 Ushio Env ini finished&body=ini finished!!"
 #
 # system reboot 
 reboot
