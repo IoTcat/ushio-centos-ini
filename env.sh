@@ -6,5 +6,64 @@ cd /
 hostname $1
 hostnamectl set-hostname $1
 # 
+# yum update
 # 
+yum -y update
+yum install epel-release -y
+#
+# Development Tools
+#
+yum install -y wget git vim unzip zip openssl make gcc gcc-c++
+# git config
+git config --global user.name $1
+git config --global user.email git@$1
 # 
+# firewall
+# 
+systemctl stop firewalld
+systemctl disable firewalld
+sed -i s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config
+yum install iptables-services iptables-devel -y
+systemctl start iptables
+systemctl enable ipdables
+iptables -A OUTPUT -j ACCEPT
+iptables -A INPUT -j REJECT
+iptables -A FORWARD -j REJECT
+iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+iptables -A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+service iptables save
+service iptables restart
+#
+# python
+#
+yum install https://centos7.iuscommunity.org/ius-release.rpm -y
+yum install python36u -y
+yum install python36u-devel -y
+ln -s /bin/python3.6 /bin/python3
+yum install python36u-pip -y
+ln -s /bin/pip3.6 /bin/pip3
+yum install -y python-pip
+pip install --upgrade pip
+pip3 install --upgrade pip
+#
+# docker
+#
+yum -y install docker
+systemctl enable docker
+systemctl start docker
+pip install --upgrade backports.ssl_match_hostname
+pip install docker-compose
+#############################
+#  Ushio Env Ini Finished           
+#############################
+# 
+# Email Notice
+# curl "https://api.yimian.xyz/mail/?to=i@iotcat.me&subject=$1 Ushio Env ini finished&body=ini finished!!"
+#
+# system reboot 
+#reboot
