@@ -17,6 +17,15 @@ yum install -y wget git vim unzip zip openssl make gcc gcc-c++
 # git config
 git config --global user.name $1
 git config --global user.email git@$1
+#
+# docker
+#
+yum -y install docker
+systemctl enable docker
+systemctl start docker
+curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 # 
 # firewall
 # 
@@ -38,26 +47,6 @@ iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 service iptables save
 service iptables restart
-#
-# python
-#
-yum install https://centos7.iuscommunity.org/ius-release.rpm -y
-yum install python36u -y
-yum install python36u-devel -y
-ln -s /bin/python3.6 /bin/python3
-yum install python36u-pip -y
-ln -s /bin/pip3.6 /bin/pip3
-yum install -y python-pip
-pip install --upgrade pip
-pip3 install --upgrade pip
-#
-# docker
-#
-yum -y install docker
-systemctl enable docker
-systemctl start docker
-pip install --upgrade backports.ssl_match_hostname
-pip install docker-compose
 #############################
 #  Ushio Env Ini Finished           
 #############################
