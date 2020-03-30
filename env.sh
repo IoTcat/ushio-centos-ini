@@ -5,11 +5,23 @@ cd /
 # 
 hostname $1
 hostnamectl set-hostname $1
+#
+# active rc.local
+#
+chmod +x /etc/rc.d/rc.local
 # 
 # yum update
 # 
 yum -y update
 yum install epel-release -y
+#
+# onedrive
+#
+yum install -y screen fuse fuse-devel
+curl https://rclone.org/install.sh | sudo bash
+rclone config
+nohup rclone mount o:ushio /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &
+echo nohup rclone mount o:ushio /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &>>/etc/rc.d/rc.local
 #
 # Development Tools
 #
