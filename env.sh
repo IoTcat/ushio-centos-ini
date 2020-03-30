@@ -57,8 +57,8 @@ service iptables restart
 curl https://rclone.org/install.sh | sudo bash
 wget -P /root/.config/rclone/ https://onedrive.yimian.xyz/config/rclone/rclone.conf.aes
 openssl enc -aes-128-cbc -in /root/.config/rclone/rclone.conf.aes -out /root/.config/rclone/rclone.conf -pass pass:$2 -d
-nohup rclone mount o:ushio /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &
-echo nohup rclone mount o:ushio /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &>>/etc/rc.d/rc.local
+nohup rclone mount onedrive:ushio /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &
+echo nohup rclone mount onedrive:ushio /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &>>/etc/rc.d/rc.local
 #############################
 #  Ushio Env Ini Finished           
 #############################
