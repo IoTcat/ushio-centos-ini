@@ -79,8 +79,17 @@ systemctl start rclone
 #
 # config
 #
+# vim
 ln -s /mnt/config/vim/.vimrc ~/.vimrc
+# git
 ln -s /mnt/config/git/.git-credentials ~/.git-credentials
+#
+# ssh
+rm -f  ~/.ssh/authorized_keys
+ln -s /mnt/config/ssh/authorized_keys ~/.ssh/authorized_keys
+sed -i '/'$1'/d' /mnt/config/ssh/authorized_keys
+ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
+cat ~/.ssh/id_rsa.pub>>/mnt/config/ssh/authorized_keys
 #############################
 #  Ushio Env Ini Finished           
 #############################
