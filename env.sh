@@ -39,6 +39,7 @@ chmod +x /usr/local/bin/docker-compose
 ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 wget -P /etc/systemd/system https://onedrive.yimian.xyz/config/systemd/ushio.service
 chmod +x /etc/systemd/system/ushio.service
+sed -i 's/$HOSTNAME/'$1'/g' /etc/systemd/system/ushio.service
 systemctl daemon-reload
 systemctl enable ushio
 # 
@@ -71,6 +72,7 @@ openssl enc -aes-128-cbc -in /root/.config/rclone/rclone.conf.aes -out /root/.co
 nohup rclone mount onedrive:ushio/$3 /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &
 wget -P /etc/systemd/system https://onedrive.yimian.xyz/config/systemd/rclone.service
 chmod +x /etc/systemd/system/rclone.service
+sed -i 's/$USHIO_VERSION/'$3'/g' /etc/systemd/system/rclone.service
 systemctl daemon-reload
 systemctl enable rclone
 systemctl start rclone
