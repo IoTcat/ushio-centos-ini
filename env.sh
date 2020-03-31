@@ -1,10 +1,15 @@
 #!/bin/bash
 cd /
+#
+# system env
 # 
 # set hostname
-# 
 hostname $1
 hostnamectl set-hostname $1
+#
+# set USHIO_VERSION env var
+export USHIO_VERSION="$3"
+echo export USHIO_VERSION="$3">>/etc/profile
 #
 # active rc.local
 #
@@ -63,7 +68,7 @@ service iptables restart
 curl https://rclone.org/install.sh | sudo bash
 wget -P /root/.config/rclone/ https://onedrive.yimian.xyz/config/rclone/rclone.conf.aes
 openssl enc -aes-128-cbc -in /root/.config/rclone/rclone.conf.aes -out /root/.config/rclone/rclone.conf -pass pass:$2 -d
-nohup rclone mount onedrive:ushio /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &
+nohup rclone mount onedrive:ushio/$3 /mnt --allow-other --allow-non-empty --vfs-cache-mode writes &
 wget -P /etc/systemd/system https://onedrive.yimian.xyz/config/systemd/rclone.service
 chmod +x /etc/systemd/system/rclone.service
 systemctl daemon-reload
