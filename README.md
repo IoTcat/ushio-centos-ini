@@ -10,3 +10,5 @@ $ bash <(curl -s https://raw.githubusercontent.com/iotcat/ushio-centos-ini/maste
  - rclone 挂载onedrive
  - docker-compose
  - iptable
+ - ssh自动互联
+ - 同步vim,git配置
