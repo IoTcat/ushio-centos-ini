@@ -87,10 +87,16 @@ ln -s /mnt/config/git/.git-credentials ~/.git-credentials
 # ssh
 rm -f  ~/.ssh/authorized_keys
 ln -s /mnt/config/ssh/authorized_keys ~/.ssh/authorized_keys
-sed -i '/'$1'/d' /mnt/config/ssh/authorized_keys
 ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
-cat ~/.ssh/id_rsa.pub>>/mnt/config/ssh/authorized_keys
 #sed -i 's/#PermitRootLogin\syes/PermitRootLogin no/g' /etc/ssh/sshd_config
+#
+# delay run
+#
+sleep 15s
+#
+# ssh
+sed -i '/'$1'/d' /mnt/config/ssh/authorized_keys
+cat ~/.ssh/id_rsa.pub>>/mnt/config/ssh/authorized_keys
 #############################
 #  Ushio Env Ini Finished           
 #############################
