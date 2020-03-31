@@ -88,6 +88,12 @@ ln -s /mnt/config/git/.git-credentials ~/.git-credentials
 rm -f  ~/.ssh/authorized_keys
 ln -s /mnt/config/ssh/authorized_keys ~/.ssh/authorized_keys
 ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
+#
+# hosts rule
+rm -f /etc/hosts.allow
+ln -s /mnt/config/hosts/hosts.allow /etc/hosts.allow
+rm -f /etc/hosts.deny
+ln -s /mnt/config/hosts/hosts.deny /etc/hosts.deny
 #sed -i 's/#PermitRootLogin\syes/PermitRootLogin no/g' /etc/ssh/sshd_config
 #
 # delay run
