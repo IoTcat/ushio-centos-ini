@@ -45,7 +45,7 @@ systemctl enable ushio
 #
 # nodeJS
 #
-wget-P /tmp/ https://nodejs.org/dist/v12.16.1/node-v12.16.1-linux-x64.tar.xz
+wget -P /tmp/ https://nodejs.org/dist/v12.16.1/node-v12.16.1-linux-x64.tar.xz
 xz -d /tmp/node-v12.16.1-linux-x64.tar.xz
 tar -vxf /tmp/node-v12.16.1-linux-x64.tar /usr/local/
 mv /usr/local/node-v12.16.1-linux-x64 /usr/local/node
