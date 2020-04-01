@@ -117,7 +117,7 @@ rm -f /etc/hosts.allow
 ln -s /mnt/config/hosts/hosts.allow /etc/hosts.allow
 rm -f /etc/hosts.deny
 ln -s /mnt/config/hosts/hosts.deny /etc/hosts.deny
-sed -i 's/#PermitRootLogin\syes/PermitRootLogin no/g' /etc/ssh/sshd_config
+#sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
 #
 # delay run
 #
