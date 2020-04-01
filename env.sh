@@ -64,6 +64,7 @@ npm cache clean -f
 npm install -g n
 n stable
 npm i -g pm2
+pm2 startup
 npm i -g yarn
 # 
 # firewall
