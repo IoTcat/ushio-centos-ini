@@ -42,6 +42,29 @@ chmod +x /etc/systemd/system/ushio.service
 sed -i 's/$HOSTNAME/'$1'/g' /etc/systemd/system/ushio.service
 systemctl daemon-reload
 systemctl enable ushio
+#
+# nodeJS
+#
+wget-P /tmp/ https://nodejs.org/dist/v12.16.1/node-v12.16.1-linux-x64.tar.xz
+xz -d /tmp/node-v12.16.1-linux-x64.tar.xz
+tar -vxf /tmp/node-v12.16.1-linux-x64.tar /usr/local/
+mv /usr/local/node-v12.16.1-linux-x64 /usr/local/node
+rm -f /tmp/node-v12.16.1-linux-x64.tar
+ln -s /usr/local/node/bin/node /usr/local/bin/node
+ln -s /usr/local/node/bin/npm /usr/local/bin/npm
+ln -s /usr/local/node/bin/npx /usr/local/bin/npx
+ln -s /usr/local/node/bin/node /usr/bin/node
+ln -s /usr/local/node/bin/npm /usr/bin/npm
+ln -s /usr/local/node/bin/npx /usr/bin/npx
+npm i npm -g
+echo PATH=\"'$PATH':/usr/local/node/bin\">>/etc/profile
+echo export PATH>>/etc/profile
+source /etc/profile
+npm cache clean -f
+npm install -g n
+n stable
+npm i -g pm2
+npm i -g yarn
 # 
 # firewall
 # 
@@ -94,7 +117,7 @@ rm -f /etc/hosts.allow
 ln -s /mnt/config/hosts/hosts.allow /etc/hosts.allow
 rm -f /etc/hosts.deny
 ln -s /mnt/config/hosts/hosts.deny /etc/hosts.deny
-#sed -i 's/#PermitRootLogin\syes/PermitRootLogin no/g' /etc/ssh/sshd_config
+sed -i 's/#PermitRootLogin\syes/PermitRootLogin no/g' /etc/ssh/sshd_config
 #
 # delay run
 #
