@@ -82,9 +82,17 @@ iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 iptables -A OUTPUT -p icmp --icmp-type echo-reply -j ACCEPT
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A OUTPUT -o lo -j ACCEPT
+# ssh
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+# iis
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+# mqtt
+iptables -A INPUT -p tcp --dport 1883 -j ACCEPT
+iptables -A INPUT -p tcp --dport 8083 -j ACCEPT
+iptables -A INPUT -p tcp --dport 8084 -j ACCEPT
+iptables -A INPUT -p tcp --dport 8883 -j ACCEPT
+iptables -A INPUT -p tcp --dport 18083 -j ACCEPT
 service iptables save
 service iptables restart
 #
