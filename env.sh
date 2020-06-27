@@ -118,6 +118,7 @@ ln -s /mnt/config/git/.git-credentials ~/.git-credentials
 #
 # ssh
 rm -f  ~/.ssh/authorized_keys
+mkdir ~/.ssh
 ln -s /mnt/config/ssh/authorized_keys ~/.ssh/authorized_keys
 ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
 #
