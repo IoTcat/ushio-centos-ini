@@ -49,6 +49,7 @@ systemctl restart iptables
 #
 # config
 #
+systemctl restart docker
 cd /usr/etc/
 echo Ready~~
 #############################
