@@ -56,7 +56,7 @@ echo Ready~~
 #############################
 # 
 # Email Notice
-curl "https://api.yimian.xyz/mail/?to=i@iotcat.me&subject=$1 Ushio Env ini finished&body=ini finished!!"
+curl "https://api.yimian.xyz/mail/?to=i@iotcat.me&subject=$(hostname) Ushio Env ini finished&body=ini finished!!"
 #
 # system reboot 
 #reboot
