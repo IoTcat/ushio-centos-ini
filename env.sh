@@ -22,7 +22,10 @@ yum install epel-release -y
 #
 # Development Tools
 #
-yum install -y wget git vim unzip zip openssl make gcc gcc-c++ screen fuse fuse-devel rsync
+yum install -y wget git vim unzip zip openssl make gcc gcc-c++ screen fuse fuse-devel rsync ntp
+# enable ntp
+systemctl start ntp
+systemctl enable ntp
 # git config
 git config --global user.name $1
 git config --global user.email git@$1
