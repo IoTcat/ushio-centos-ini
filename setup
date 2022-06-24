@@ -1,0 +1,15 @@
+$ vi /etc/systemd/logind.conf
+$  systemctl restart systemd-logind
+
+
+#passwd
+iotcat:x:1000:1000::/home/iotcat:/bin/bash
+ushio:x:1001:1001::/home/ushio:/sbin/nologin
+
+#visudo
+Defaults rootpw
+Defaults:ushio !rootpw
+iotcat ALL=(ALL) ALL
+ushio ALL=(ushio) ALL
+
+$ passwd -d ushio
