@@ -13,3 +13,6 @@ iotcat ALL=(ALL) ALL
 ushio ALL=(ushio) ALL
 
 $ passwd -d ushio
+
+#sshd_config
+disable root login
