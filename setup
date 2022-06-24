@@ -2,6 +2,9 @@ $ vi /etc/systemd/logind.conf
 $  systemctl restart systemd-logind
 
 
+# /etc/sysconfig/network-scripts/ifcfg-enp1s0
+
+
 #passwd
 iotcat:x:1000:1000::/home/iotcat:/bin/bash
 ushio:x:1001:1001::/home/ushio:/sbin/nologin
