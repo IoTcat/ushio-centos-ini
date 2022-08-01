@@ -46,7 +46,7 @@ systemctl enable ntpd
 systemctl start crond
 systemctl enable crond
 crontab -e
-*/5 * * * * /usr/sbin/ntpdate pool.ntp.org
+*/5 * * * * /usr/sbin/ntpdate -u pool.ntp.org
 
 git config --global user.name iotcat
 git config --global user.email i@iotcat.me
