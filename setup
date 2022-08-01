@@ -1,21 +1,29 @@
 $ vi /etc/systemd/logind.conf
+HandleLidSwitch=ignore
 $  systemctl restart systemd-logind
 
+# $ vi /etc/sysconfig/network-scripts/ifcfg-enp1s0
 
-# /etc/sysconfig/network-scripts/ifcfg-enp1s0
-
-
-#passwd
+#/etc/passwd
 iotcat:x:1000:1000::/home/iotcat:/bin/bash
-ushio:x:1001:1001::/home/ushio:/sbin/nologin
+#ushio:x:1001:1001::/home/ushio:/sbin/nologin
 
-#visudo
+$ visudo
 Defaults rootpw
-Defaults:ushio !rootpw
+#Defaults:ushio !rootpw
 iotcat ALL=(ALL) ALL
-ushio ALL=(ushio) ALL
+#ushio ALL=(ushio) ALL
 
-$ passwd -d ushio
+# $ passwd -d ushio
 
-#sshd_config
-disable root login
+#/etc/ssh/sshd_config
+PermitRootLogin no
+$ systemctl restart sshd 
+
+# ~/.ssh/authorized_keys
+add .pub
+sudo ln -s /home/iotcat/.ssh /root/.ssh
+# on remotes 
+ssh-copy-id iotcat@xxx.yimian.xyz
+
+
