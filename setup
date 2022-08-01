@@ -38,7 +38,7 @@ setenforce 0
 yum update -y
 yum install epel-release -y
 yum update -y
-yum install -y wget git vim creen rsync ntp
+yum install -y wget git vim screen ntp
 
 # enable ntp
 systemctl start ntpd
@@ -53,8 +53,8 @@ git config --global user.email i@iotcat.me
 # add local id_rsa.pub to github
 
 yum install -y yum-utils device-mapper-persistent-data lvm2
-yum -config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-yum install docker-ce docker-ce-cli containerd.io
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install -y docker-ce docker-ce-cli containerd.io
 systemctl start docker　
 systemctl enable docker　
 
