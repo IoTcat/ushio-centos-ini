@@ -70,4 +70,7 @@ sudo git clone --recursive git@github.com:IoTcat/ushio-share.git ~/share
 sudo git clone -b xxx.yimian.xyz git@github.com:IoTcat/ushio-config.git ~/config
 
 
+ ssh-copy-id -p 2222 iotcat@usa.yimian.xyz
+ 0 * * * * /usr/bin/rsync -az -e 'ssh -p 2222' iotcat@usa.yimian.xyz:~/secret /home/iotcat/
+
 reboot
