@@ -21,6 +21,7 @@ iotcat ALL=(ALL) ALL
 
 #/etc/ssh/sshd_config
 PermitRootLogin no
+Port 2222
 $ systemctl restart sshd 
 
 # ~/.ssh/authorized_keys
