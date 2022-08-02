@@ -63,4 +63,10 @@ curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compos
 chmod +x /usr/local/bin/docker-compose
 ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
+sudo mkdir data
+sudo mkdir log
+sudo git clone --recursive git@github.com:IoTcat/ushio-share.git ~/share
+sudo git clone -b xxx.yimian.xyz git@github.com:IoTcat/ushio-config.git ~/config
+
+
 reboot
