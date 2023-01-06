@@ -1,76 +1,108 @@
-hostname xxx.yimian.xyz
-hostnamectl set-hostname xxx.yimian.xyz
+// set hostname
+$ hostname xxx.yimian.xyz
+$ hostnamectl set-hostname xxx.yimian.xyz
 
+// physical laptop server setup
 $ vi /etc/systemd/logind.conf
 HandleLidSwitch=ignore
-$  systemctl restart systemd-logind
+$ systemctl restart systemd-logind
 
+// physical server network config
 # $ vi /etc/sysconfig/network-scripts/ifcfg-enp1s0
 
+// add users
+$ adduser iotcat
+$ adduser ushio --no-create-home --disabled-password --disabled-login
 #/etc/passwd
 iotcat:x:1000:1000::/home/iotcat:/bin/bash
-#ushio:x:1001:1001::/home/ushio:/sbin/nologin
+ushio:x:1001:1001::/home/ushio:/usr/sbin/nologin
+$ alias ushio='sudo -u ushio'
 
+// sudo setup
 $ visudo
 Defaults rootpw
-#Defaults:ushio !rootpw
-iotcat ALL=(ALL) ALL
-#ushio ALL=(ushio) ALL
+$ usermod -aG sudo iotcat
+//$ passwd -d ushio
 
-# $ passwd -d ushio
-
+// config sshd
 #/etc/ssh/sshd_config
-PermitRootLogin no
 Port 2222
+PermitRootLogin no
+PasswordAuthentication yes
 $ systemctl restart sshd 
 
+// connect to ssh
 # ~/.ssh/authorized_keys
-add .pub
-sudo ln -s /home/iotcat/.ssh /root/.ssh
+$ ssh-keygen
 # on remotes 
-ssh-copy-id iotcat@xxx.yimian.xyz
+$ ssh-copy-id -p 2222 iotcat@xxx.yimian.xyz
 
-systemctl stop firewalld
-systemctl disable firewalld
-sed -i s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config
-setenforce 0
+// disable any firewall
+// centOS
+$ systemctl stop firewalld
+$ systemctl disable firewalld
+$ sed -i s/SELINUX=enforcing/SELINUX=disabled/g /etc/selinux/config
+$ setenforce 0
+// debian
+$ sudo ufw disable
 
-
-yum update -y
-yum install epel-release -y
-yum update -y
-yum install -y wget git vim screen ntp
+// package management
+// centOS
+$ yum update -y
+$ yum install epel-release -y
+$ yum update -y
+$ yum install -y wget git vim screen ntp
+// debian
+$ apt update && apt upgrade -y
+$ apt install -y wget git vim screen ntp
 
 # enable ntp
-systemctl start ntpd
-systemctl enable ntpd
-systemctl start crond
-systemctl enable crond
-crontab -e
+// debian
+$ systemctl start ntp
+$ systemctl enable ntp
+// centOS
+$ systemctl start ntpd
+$ systemctl enable ntpd
+$ systemctl start crond
+$ systemctl enable crond
+$ crontab -e
 */5 * * * * /usr/sbin/ntpdate -u pool.ntp.org
 
-git config --global user.name iotcat
-git config --global user.email i@iotcat.me
+// add github data
+$ git config --global user.name xxx.yimian.xyz
+$ git config --global user.email xxx@yimian.xyz
 # add local id_rsa.pub to github
 
-yum install -y yum-utils device-mapper-persistent-data lvm2
-yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-yum install -y docker-ce docker-ce-cli containerd.io
-systemctl start docker
-systemctl enable docker
+// install docker
+// debian
+# https://docs.docker.com/engine/install/debian/
+// centOS
+$ yum install -y yum-utils device-mapper-persistent-data lvm2
+$ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+$ yum install -y docker-ce docker-ce-cli containerd.io
+
+// config docker
+$ usermod -aG docker ushio
+$ systemctl start docker
+$ systemctl enable docker
 
 
-curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-
-sudo mkdir data
-sudo mkdir log
-sudo git clone --recursive git@github.com:IoTcat/ushio-share.git ~/share
-sudo git clone -b xxx.yimian.xyz git@github.com:IoTcat/ushio-config.git ~/config
+// docker composer
+$ curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+$ chmod +x /usr/local/bin/docker-compose
+$ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 
- ssh-copy-id -p 2222 iotcat@usa.yimian.xyz
+// git repo 
+$ mkdir data
+$ mkdir log
+$ git clone --recursive git@github.com:IoTcat/ushio-share.git ~/share
+$ git clone -b xxx.yimian.xyz git@github.com:IoTcat/ushio-config.git ~/config
+
+// secret distribution
+ $ ssh-copy-id -p 2222 iotcat@usa.yimian.xyz
+ $ crontab -e
  0 * * * * /usr/bin/rsync -az -e 'ssh -p 2222' iotcat@usa.yimian.xyz:~/secret /home/iotcat/
+
 
 reboot
