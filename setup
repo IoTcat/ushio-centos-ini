@@ -58,8 +58,9 @@ $ apt install -y wget git vim screen ntp
 
 # enable ntp
 // debian
-$ systemctl start ntp
-$ systemctl enable ntp
+$ apt install -y systemd-timesyncd
+$ systemctl start systemd-timesyncd
+$ systemctl enable systemd-timesyncd
 // centOS
 $ systemctl start ntpd
 $ systemctl enable ntpd
