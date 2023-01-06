@@ -69,10 +69,9 @@ $ systemctl enable crond
 $ crontab -e
 */5 * * * * /usr/sbin/ntpdate -u pool.ntp.org
 
-// add github data
-$ git config --global user.name xxx.yimian.xyz
-$ git config --global user.email xxx@yimian.xyz
-# add local id_rsa.pub to github
+# disable swap
+$ sudo swapoff -a
+$ sudo sed -ri '/\sswap\s/s/^#?/#/' /etc/fstab
 
 // install docker
 // debian
@@ -92,6 +91,14 @@ $ systemctl enable docker
 $ curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 $ chmod +x /usr/local/bin/docker-compose
 $ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+
+
+
+// add github data
+$ git config --global user.name xxx.yimian.xyz
+$ git config --global user.email xxx@yimian.xyz
+# add local id_rsa.pub to github
 
 
 // git repo 
