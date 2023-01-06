@@ -29,7 +29,7 @@ $ usermod -aG sudo iotcat
 Port 2222
 PermitRootLogin no
 PasswordAuthentication yes
-$ systemctl restart sshd 
+$ sudo systemctl restart sshd 
 
 // connect to ssh
 # ~/.ssh/authorized_keys
@@ -53,14 +53,14 @@ $ yum install epel-release -y
 $ yum update -y
 $ yum install -y wget git vim screen ntp
 // debian
-$ apt update && apt upgrade -y
-$ apt install -y wget git vim screen ntp
+$ sudo apt update && sudo apt upgrade -y
+$ sudo apt install -y wget git vim screen ntp
 
 # enable ntp
 // debian
-$ apt install -y systemd-timesyncd
-$ systemctl start systemd-timesyncd
-$ systemctl enable systemd-timesyncd
+$ sudo apt install -y systemd-timesyncd
+$ sudo systemctl start systemd-timesyncd
+$ sudo systemctl enable systemd-timesyncd
 // centOS
 $ systemctl start ntpd
 $ systemctl enable ntpd
@@ -69,30 +69,43 @@ $ systemctl enable crond
 $ crontab -e
 */5 * * * * /usr/sbin/ntpdate -u pool.ntp.org
 
-# disable swap
+// disable swap
 $ sudo swapoff -a
 $ sudo sed -ri '/\sswap\s/s/^#?/#/' /etc/fstab
 
-// install docker
-// debian
-# https://docs.docker.com/engine/install/debian/
-// centOS
-$ yum install -y yum-utils device-mapper-persistent-data lvm2
-$ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-$ yum install -y docker-ce docker-ce-cli containerd.io
 
-// config docker
-$ usermod -aG docker ushio
-$ systemctl start docker
-$ systemctl enable docker
+// install containerd 
+$ cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
+overlay
+br_netfilter
+EOF
+$ sudo modprobe overlay
+$ sudo modprobe br_netfilter
+$ cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes-k8s.conf
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+EOF
+$ sudo sysctl --system
+$ sudo apt  update
+$ sudo apt -y install containerd
+$ containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
+$ sudo vi /etc/containerd/config.toml
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+  SystemdCgroup = true
+$ sudo systemctl restart containerd
+$ sudo systemctl enable containerd
 
 
-// docker composer
-$ curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-$ chmod +x /usr/local/bin/docker-compose
-$ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-
-
+// install kubeadm kubectl kubelet
+$ sudo apt-get update
+$ sudo apt-get install -y apt-transport-https ca-certificates curl
+$ sudo mkdir /etc/apt/keyrings
+$ sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+$ echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+$ sudo apt-get update
+$ sudo apt-get install -y kubelet kubeadm kubectl
+$ sudo apt-mark hold kubelet kubeadm kubectl
 
 
 // add github data
