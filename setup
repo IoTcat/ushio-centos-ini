@@ -16,7 +16,7 @@ $ adduser ushio --no-create-home --disabled-password --disabled-login
 #/etc/passwd
 iotcat:x:1000:1000::/home/iotcat:/bin/bash
 ushio:x:1001:1001::/home/ushio:/usr/sbin/nologin
-$ alias ushio='sudo -u ushio'
+$ echo alias ushio=\'sudo -u ushio\'>~/.bash_aliases
 
 // sudo setup
 $ visudo
