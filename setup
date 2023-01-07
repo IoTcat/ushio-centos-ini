@@ -54,7 +54,7 @@ $ yum update -y
 $ yum install -y wget git vim screen ntp
 // debian
 $ sudo apt update && sudo apt upgrade -y
-$ sudo apt install -y wget git vim screen ntp
+$ sudo apt install -y wget git vim screen
 
 # enable ntp
 // debian
