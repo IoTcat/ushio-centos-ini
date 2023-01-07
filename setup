@@ -115,7 +115,7 @@ $ sudo apt-mark hold kubelet kubeadm kubectl
 
 
 // for master node
-$ sudo kubeadm init
+$ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 $ ushio mkdir -p /home/ushio/.kube 
 $ sudo cp -i /etc/kubernetes/admin.conf /home/ushio/.kube/config 
 $ sudo chown ushio:ushio /home/ushio/.kube/config
