@@ -123,7 +123,7 @@ $ ushio kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0
 
 
 // for worker node
-
+$ sudo kubeadm join .........
 
 // add github data
 $ git config --global user.name xxx.yimian.xyz
