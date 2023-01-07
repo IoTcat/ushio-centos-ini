@@ -120,7 +120,7 @@ $ ushio mkdir -p /home/ushio/.kube
 $ sudo cp -i /etc/kubernetes/admin.conf /home/ushio/.kube/config 
 $ sudo chown ushio:ushio /home/ushio/.kube/config
 $ ushio kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.20.2/Documentation/kube-flannel.yml
-
+$ ushio kubectl taint node main node-role.kubernetes.io/master:NoSchedule-
 
 // for worker node
 $ sudo kubeadm join .........
