@@ -114,6 +114,17 @@ $ sudo apt install -y kubeadm=1.23.3-00 kubelet=1.23.3-00 kubectl=1.23.3-00
 $ sudo apt-mark hold kubelet kubeadm kubectl
 
 
+// for master node
+$ sudo kubeadm init
+$ ushio mkdir -p /home/ushio/.kube 
+$ sudo cp -i /etc/kubernetes/admin.conf /home/ushio/.kube/config 
+$ sudo chown ushio:ushio /home/ushio/.kube/config
+$ ushio kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.20.2/Documentation/kube-flannel.yml
+
+
+// for worker node
+
+
 // add github data
 $ git config --global user.name xxx.yimian.xyz
 $ git config --global user.email xxx@yimian.xyz
