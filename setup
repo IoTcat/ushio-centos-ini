@@ -139,7 +139,7 @@ $ vim
 ///////////////////////////////////////////////////////////////////
 $ sudo kubeadm join .........
 # on k8s console
-$ ushio kubectl label node main --overwrite role=<main|worker|temp> location=<usa|hk|cn>
+$ ushio kubectl label node xxx.yimian.xyz --overwrite role=<main|worker|temp> location=<usa|hk|cn>
 
 // git repo 
 $ mkdir data
