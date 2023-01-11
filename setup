@@ -121,6 +121,8 @@ $ sudo cp -i /etc/kubernetes/admin.conf /home/ushio/.kube/config
 $ sudo chown ushio:ushio /home/ushio/.kube/config
 $ ushio kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/v0.20.2/Documentation/kube-flannel.yml
 $ ushio kubectl taint node main node-role.kubernetes.io/master:NoSchedule-
+$ ushio kubectl label node main --overwrite role=main location=usa
+
 
 // add github data
 $ git config --global user.name xxx.yimian.xyz
@@ -136,7 +138,8 @@ $ vim
 // for worker node
 ///////////////////////////////////////////////////////////////////
 $ sudo kubeadm join .........
-
+# on k8s console
+$ ushio kubectl label node main --overwrite role=<main|worker|temp> location=<usa|hk|cn>
 
 // git repo 
 $ mkdir data
