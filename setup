@@ -137,6 +137,9 @@ $ git config --global user.name xxx.yimian.xyz
 $ git config --global user.email xxx@yimian.xyz
 # add local id_rsa.pub to github
 
+// get helm repo
+$ git clone -b xxx git@github.com:IoTcat/ushio-k8s-helm.git ~/prod
+
 // vim config
 $ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 $ git clone https://github.com/iotcat/vimrc.git ~/.vim_src && rm -f ~/.vimrc && ln -s ~/.vim_src/.vimrc ~/.vimrc
@@ -144,22 +147,11 @@ $ vim +PlugInstall
 $ vim
 # API KEY AT https://wakatime.com/settings/api-key
 
+
 // for worker node
 ///////////////////////////////////////////////////////////////////
 $ sudo kubeadm join .........
 # on k8s console
 $ ushio kubectl label node xxx.yimian.xyz --overwrite role=<main|worker|temp> location=<usa|hk|cn>
 
-// git repo 
-$ mkdir data
-$ mkdir log
-$ git clone --recursive git@github.com:IoTcat/ushio-share.git ~/share
-$ git clone -b xxx.yimian.xyz git@github.com:IoTcat/ushio-config.git ~/config
 
-// secret distribution
- $ ssh-copy-id -p 2222 iotcat@usa.yimian.xyz
- $ crontab -e
- 0 * * * * /usr/bin/rsync -az -e 'ssh -p 2222' iotcat@usa.yimian.xyz:~/secret /home/iotcat/
-
-
-reboot
